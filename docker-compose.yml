@@ -1,0 +1,44 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: .
+    restart: always
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/app
+    command: >
+      sh -c "python manage.py makemigrations &&
+             python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
+    environment:
+      - DB_HOST=db
+      - DB_NAME=melih
+      - DB_USER=melih1144 
+      - DB_PASS=uLb#h@cs2!@4
+    depends_on:
+      - db    
+    volumes:
+      - media_volume:/app/media
+      - static_volume:/app/static
+
+
+  db:
+    image: postgres:12-alpine
+    restart: always
+    container_name: "proj_db"
+    ports:
+      - "54320:5432"
+    environment:
+      POSTGRES_DB: melih
+      POSTGRES_USER: melih1144
+      POSTGRES_PASSWORD: uLb#h@cs2!@4
+    volumes:
+      - my_dbdata:/var/lib/postgresql/data
+
+volumes:
+  my_dbdata:
+  media_volume:
+  static_volume:
