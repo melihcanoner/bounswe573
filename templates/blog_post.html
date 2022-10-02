@@ -1,0 +1,35 @@
+<h2>{{ post.title }}</h2>
+<div class="content">
+    <p>
+        {{ question.text }}
+    </p>
+    <span>
+        Written by {{ question.user.username }}  on {{ question.created_on }}
+    </span>
+</div>
+
+{% if question.answer_set.all %}
+<h2>Comments</h2>
+<div class="answers">
+    {% for answers in question.answer_set.all %}
+        <span>
+            {{ answers.user.username }}</a> said on {{ answers.created_on }}
+        </span>
+        <p>
+            {{ answers.text }}
+        </p>
+    {% endfor %}
+</div>
+{% endif %}
+
+<br />
+
+<h2>Add Comment</h2>
+
+<form action="" method="POST">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
+    <input type="submit" name="submit" value="Submit" />
+</form>

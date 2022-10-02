@@ -1,0 +1,27 @@
+<a href='{% url "logout-view" %}'>Logout</a>
+Welcome,
+{{userdetail.username}}
+<h1>
+
+    <a href='{% url "question-view" %}'>Ask Question!</a>
+
+</h1>
+
+
+<br/>
+Questions.
+<br/>
+{% for question in questions %}
+<li>Q: {{question.text}} by {{question.user.username}} </li>
+<a href="{% url 'answer-create' pk=question.id %}" >Add Comment</a>
+{% for answer in question.answers_set.all %}
+<ul>
+
+    <li>A: {{answer.text}} by {{answer.user.username}} </li>
+
+</ul>
+{% endfor %}
+
+{% endfor %}
+
+<br/>
