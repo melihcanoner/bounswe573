@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
      'core',
 ]
 
@@ -82,13 +83,15 @@ AUTH_USER_MODEL = 'core.User'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         # os.environ.get  => get variables from environment (of docker-compose)
         # all variables comes from docker-compose.yml
         'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT'),
         'NAME': os.environ.get('DB_NAME'),
         'USER': os.environ.get('DB_USER'),
         'PASSWORD': os.environ.get('DB_PASS'),
+         'SSLMODE': os.environ.get('DB_SSLMODE'),
     }
 }
 
@@ -129,6 +132,7 @@ USE_I18N = True
 USE_TZ = True
 
 
+LOGIN_URL = '/login/'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 

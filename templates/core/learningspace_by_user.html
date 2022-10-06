@@ -1,0 +1,13 @@
+{% load humanize %}
+{% block title %} List Learningspaces{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+  <h1>Recent Learningspaces</h1> 
+    <ul>
+        {% for learningspace in object_list %}
+        <li><a href="{% url 'learningspace-detail' learningspace.slug %}">{{learningspace.title}}</a> | <a href="{% url 'learningspace-by' learningspace.user %}">{{learningspace.user}}</a> | <span style="font-size: 12px;"><i>{{learningspace.created_on | naturaltime}}</i></span></li><br>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock%}

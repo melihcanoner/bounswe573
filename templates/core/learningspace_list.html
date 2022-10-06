@@ -1,0 +1,20 @@
+{% load humanize %}
+
+<a href='{% url "logout-view" %}'>Logout</a>
+{% block title %} Welcome to Learningspace Platform, {{user.username}} {% endblock %}
+
+{% block content %}
+<br>
+<a href="{% url 'learningspace-add'  %}" >Create new learningspace</a>
+<br>
+<div class="jumbotron">
+  <h1>Learningspaces</h1>
+
+    <ul>
+        {% for learningspace in object_list %}
+        <li><a href="{% url 'learningspace-detail' learningspace.slug %}">{{learningspace.title}}</a> | <a href="{% url 'learningspace-by' learningspace.user %}">{{learningspace.user}}</a> | <span style="font-size: 12px;">
+          <i>{{learningspace.created_on | naturaltime}}</i></span></li><br>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock%}

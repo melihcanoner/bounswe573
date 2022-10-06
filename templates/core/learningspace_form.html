@@ -1,0 +1,12 @@
+{% block title %} Create Learningspace{% endblock %}
+
+{% block content %}
+<h2>Add Learningspace</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.media }}
+    {{ form.as_p }}
+    <button type="submit" name="button">Submit</button>
+</form>
+
+{% endblock%}

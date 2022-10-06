@@ -1,0 +1,42 @@
+{% load humanize %}
+
+{% block title %} {{object.title}} {% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+  <h1>{{object.title}}</h1> 
+  by <a href="{% url 'learningspace-by' object.user %}">{{object.user}}</a> <span style="font-size: 20px;">
+  - <span style="font-size: 20px;"><i>{{object.created_on | naturaltime}}</i></span>
+  
+  {% if request.user == object.user %}
+  <a href="{% url 'learningspace-edit' object.id %}">Edit</a>
+  <form method="post" action="{% url 'learningspace-delete' object.id %}">
+        {% csrf_token %} <input type="submit" value="Delete">
+  </form>
+  {% endif  %}
+  <p style="font-size: 20px;">{{ object.desc | safe}}</p>
+
+
+  {% for comment in object.comment_set.all %}
+  <p>
+    {{comment.desc | safe }}
+    {% if request.user == comment.user %}
+        <a href="{% url 'edit-comment' comment.id %}">Edit</a>
+    {% endif %}
+    <br>
+    by <a href="{% url 'learningspace-by' object.user %}">{{object.user}}</a> <span style="font-size: 20px;">
+    - <span style="font-size: 12px;"><i>{{comment.created_at | naturaltime}}</i></span>
+    <p>{{additional}}</p>
+</p>
+  {% endfor %}
+  {% if user.is_authenticated %}
+  <form method="post" action="{% url 'add-comment' object.id %}">
+    {% csrf_token %}
+    {{ form_comment.media }}
+    {{ form_comment.as_p }}
+    <button type="submit" name="button">Comment</button>
+</form>
+{% endif %}
+
+</div>
+{% endblock%}
